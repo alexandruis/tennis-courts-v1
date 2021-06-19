@@ -10,9 +10,7 @@ import org.springframework.stereotype.Service;
 public class TennisCourtService {
 
     private final TennisCourtRepository tennisCourtRepository;
-
     private final ScheduleService scheduleService;
-
     private final TennisCourtMapper tennisCourtMapper;
 
     public TennisCourtDTO addTennisCourt(TennisCourtDTO tennisCourt) {
@@ -29,5 +27,26 @@ public class TennisCourtService {
         TennisCourtDTO tennisCourtDTO = findTennisCourtById(tennisCourtId);
         tennisCourtDTO.setTennisCourtSchedules(scheduleService.findSchedulesByTennisCourtId(tennisCourtId));
         return tennisCourtDTO;
+    }
+
+    public TennisCourtDTO findTennisCourtByName(final String name) {
+        return tennisCourtRepository.findByName(name).map(tennisCourtMapper::map).orElseThrow(() -> {
+            throw new EntityNotFoundException("Tennis Court not found.");
+        });
+    }
+
+    public void deleteTennisCourtById(final Long id) {
+        final TennisCourt tennisCourt = tennisCourtRepository.findById(id).orElseThrow(() -> {
+            throw new EntityNotFoundException("Tennis Court not found.");
+        });
+        tennisCourtRepository.delete(tennisCourt);
+    }
+
+    public void updateTennisCourt(final TennisCourtDTO tennisCourtDTO) {
+        final TennisCourt tennisCourt = tennisCourtRepository.findById(tennisCourtDTO.getId()).orElseThrow(() -> {
+            throw new EntityNotFoundException("Tennis Court does not exist in DB!. Please try to create it first using the create tennis court API.");
+        });
+        tennisCourt.setName(tennisCourtDTO.getName());
+        tennisCourtRepository.saveAndFlush(tennisCourt);
     }
 }
