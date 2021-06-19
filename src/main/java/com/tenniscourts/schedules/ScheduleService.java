@@ -11,16 +11,15 @@ import java.util.List;
 public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
+
     private final ScheduleMapper scheduleMapper;
 
-    public ScheduleDTO addSchedule(Long tennisCourtId,
-                                   CreateScheduleRequestDTO createScheduleRequestDTO) {
+    public ScheduleDTO addSchedule(Long tennisCourtId, CreateScheduleRequestDTO createScheduleRequestDTO) {
         //TODO: implement addSchedule
         return null;
     }
 
-    public List<ScheduleDTO> findSchedulesByDates(LocalDateTime startDate,
-                                                  LocalDateTime endDate) {
+    public List<ScheduleDTO> findSchedulesByDates(LocalDateTime startDate, LocalDateTime endDate) {
         //TODO: implement
         return null;
     }
